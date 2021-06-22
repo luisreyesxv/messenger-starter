@@ -8,12 +8,6 @@ import {
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
-// axios.interceptors.request.use(async function (config) {
-//   const token = await localStorage.getItem("messenger-token");
-//   config.headers["x-access-token"] = token;
-
-//   return config;
-// });
 axios.defaults.withCredentials = true
 
 // USER THUNK CREATORS
