@@ -9,8 +9,6 @@ import {
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
-axios.defaults.withCredentials = true
-
 // USER THUNK CREATORS
 
 export const fetchUser = () => async (dispatch) => {
@@ -98,7 +96,6 @@ const sendMessage = (data, body) => {
 export const postMessage = (body) => async (dispatch) => {
   try {
     const data = await saveMessage(body);
-
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
     } else {
