@@ -3,7 +3,7 @@ import { Box } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { withStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
-import {markConversationAsRead} from "../../store/utils/thunkCreators"
+import { markConversationAsRead } from "../../store/utils/thunkCreators";
 import { connect } from "react-redux";
 
 const styles = {
@@ -18,12 +18,32 @@ const styles = {
       cursor: "grab",
     },
   },
+  unreadNumber: {
+    backgroundColor: "#3A8DFF",
+    color: "white",
+    borderRadius: "10px",
+    padding: "5px 10px",
+    fontWeight: "600",
+  },
 };
 
 class Chat extends Component {
   handleClick = async (conversation) => {
     await this.props.setActiveChat(conversation.otherUser.username);
-    await this.props.markConversationAsRead({conversationId: conversation.id})
+    await this.props.markConversationAsRead({
+      conversationId: conversation.id,
+    });
+  };
+
+  notificationButton = () => {
+    const { classes } = this.props;
+    if (this.props.conversation.unreadCount) {
+      return (
+        <Box className={classes.unreadNumber}>
+          {this.props.conversation.unreadCount}
+        </Box>
+      );
+    }
   };
 
   render() {
@@ -40,9 +60,9 @@ class Chat extends Component {
           online={otherUser.online}
           sidebar={true}
         />
-        
+
         <ChatContent conversation={this.props.conversation} />
-        {this.props.conversation.unreadCount}
+        {this.notificationButton()}
       </Box>
     );
   }
@@ -55,7 +75,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     markConversationAsRead: (id) => {
       dispatch(markConversationAsRead(id));
-    }
+    },
   };
 };
 

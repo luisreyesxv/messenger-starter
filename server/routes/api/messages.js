@@ -39,26 +39,28 @@ router.post("/", async (req, res, next) => {
       conversationId: conversation.id,
     });
 
-    
     res.json({ message, sender });
   } catch (error) {
     next(error);
   }
 });
 
-// expects {conversationId } in body 
-router.post("/unread", async (req, res, next) => {
-  try{
+// expects {conversationId } in body
+router.post("/read", async (req, res, next) => {
+  try {
     if (!req.user) {
       return res.sendStatus(401);
     }
     const senderId = req.user.id;
-    const {conversationId} = req.body;
-    if (Message.markAsRead(conversationId, senderId)){
-      return res.sendStatus(200);
-    }
-    else return res.sendStatus(400);
-  } catch(error){
+    const { conversationId } = req.body;
+    const lastReadId = await Message.findUsersLastReadConversationMessage(
+      conversationId,
+      senderId
+    );
+    if (Message.markAsRead(conversationId, senderId)) {
+      return res.json({ id: conversationId, lastRead: lastReadId });
+    } else return res.sendStatus(400);
+  } catch (error) {
     next(error);
   }
 });
