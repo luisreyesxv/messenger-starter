@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { User } = require("../../db/models");
 const jwt = require("jsonwebtoken");
-const {setCookie, clearCookie} = require("../../helpers/cookiesManager");
+const { setCookie, clearCookie } = require("../../helpers/cookiesManager");
 
 router.post("/register", async (req, res, next) => {
   try {
@@ -27,9 +27,9 @@ router.post("/register", async (req, res, next) => {
       process.env.SESSION_SECRET,
       { expiresIn: 86400 }
     );
-    setCookie(res,"authToken",token);
+    setCookie(res, "authToken", token);
 
-    res.json({  ...user.dataValues });
+    res.json(user.dataValues);
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       return res.status(401).json({ error: "User already exists" });
@@ -64,10 +64,10 @@ router.post("/login", async (req, res, next) => {
         process.env.SESSION_SECRET,
         { expiresIn: 86400 }
       );
-     
-      setCookie(res,"authToken",token,86400);
-      
-      res.json({...user.dataValues});
+
+      setCookie(res, "authToken", token);
+
+      res.json(user.dataValues);
     }
   } catch (error) {
     next(error);
@@ -75,7 +75,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.delete("/logout", (req, res, next) => {
-  clearCookie(res,"authToken");
+  clearCookie(res, "authToken");
   res.sendStatus(204);
 });
 
@@ -83,7 +83,7 @@ router.get("/user", (req, res, next) => {
   if (req.user) {
     return res.json(req.user);
   } else {
-    clearCookie(res,"authToken");
+    clearCookie(res, "authToken");
     return res.json({});
   }
 });
