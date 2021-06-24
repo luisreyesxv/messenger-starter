@@ -29,10 +29,12 @@ const styles = {
 
 class Chat extends Component {
   handleClick = async (conversation) => {
+    const { activeConversation } = this.props;
     await this.props.setActiveChat(conversation.otherUser.username);
-    await this.props.markConversationAsRead({
-      conversationId: conversation.id,
-    });
+    
+    if (!activeConversation ||conversation.otherUser.username !== activeConversation) {
+      await this.props.markConversationAsRead({conversationId: conversation.id,});
+    }
   };
 
   notificationButton = () => {
@@ -79,4 +81,13 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(Chat));
+const mapStateToProps = (state) => {
+  return {
+    activeConversation: state.activeConversation,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Chat));
