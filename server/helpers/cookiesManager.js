@@ -1,20 +1,18 @@
+const cookieOptions = {
+  secure: true,
+  httpOnly: true,
+};
 
+const setCookie = (response, cookieName, value, expiration = 86400) => {
+  const expirationMilliseconds = expiration * 1000;
+  response.cookie(cookieName, value, {
+    ...cookieOptions,
+    maxAge: expirationMilliseconds,
+  });
+};
 
-const setCookie = (response,cookieName,value,expiration= 86400)=>{
+const clearCookie = (response, cookieName) => {
+  response.clearCookie(cookieName, cookieOptions);
+};
 
-
-        response.cookie(cookieName, value,{
-          secure: true,
-          httpOnly: true,
-          // converting expiration to milliseconds
-          maxAge: expiration * 1000
-          }
-        )
-}
-
-const clearCookie= (response,cookieName)=>{
-  response.clearCookie(cookieName)
-}
-
-
-module.exports = {setCookie, clearCookie}
+module.exports = { setCookie, clearCookie };
