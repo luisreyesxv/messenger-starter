@@ -8,8 +8,6 @@ import {
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
-axios.defaults.withCredentials = true
-
 // USER THUNK CREATORS
 
 export const fetchUser = () => async (dispatch) => {
