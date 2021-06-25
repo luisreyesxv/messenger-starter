@@ -65,7 +65,8 @@ router.post("/login", async (req, res, next) => {
         { expiresIn: 86400 }
       );
 
-      setCookie(res, "authToken", token);
+      setCookie(res, "authToken", token, 86400);
+       develop
 
       res.json(user.dataValues);
     }
