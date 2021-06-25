@@ -1,10 +1,11 @@
 import React from "react";
 import { Box } from "@material-ui/core";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
+import TypingBubble from "./TypingBubble";
 import moment from "moment";
 
 const Messages = (props) => {
-  const { messages, otherUser, userId, lastRead } = props;
+  const { messages, otherUser, userId, lastRead, typing, id } = props;
 
   return (
     <Box>
@@ -29,6 +30,14 @@ const Messages = (props) => {
           />
         );
       })}
+      {typing?.has(id) && (
+        <TypingBubble
+          key={"typing bubble"}
+          text={"..."}
+          isTyping={typing?.has(id)}
+          otherUser={otherUser}
+        />
+      )}
     </Box>
   );
 };

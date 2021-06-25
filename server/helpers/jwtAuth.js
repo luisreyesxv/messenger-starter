@@ -1,31 +1,25 @@
 const { User } = require("../db/models");
 const jwt = require("jsonwebtoken");
 
+const jwtVerifyUser = async (token, next) => {
+  try {
+    const payload = jwt.verify(token, process.env.SESSION_SECRET);
+    const user = await User.findByPk(payload.id);
 
-const verifyJWT =  async (token,next)=>{
+    return await user;
+  } catch (err) {
+    next(err);
+  }
+};
 
-    try{
-        const userId = jwt.verify(token, process.env.SESSION_SECRET).id
-        console.log("this is the token", userId)
-        await User.findByPk(userId)
-       
-    }
-    catch(error){
-        console.log("auth error")
-        next(error);
-    }
+const jwtSignUser = (user) => {
+  const token = jwt.sign(
+    { id: user.dataValues.id },
+    process.env.SESSION_SECRET,
+    { expiresIn: 86400 }
+  );
 
+  return token;
+};
 
-}
-
-const signUserJWT = (user)=>{
-    return (jwt.sign(
-        { id: user.dataValues.id },
-        process.env.SESSION_SECRET,
-        { expiresIn: 86400 }
-      ));
-
-}
-
-
-module.exports = {verifyJWT, signUserJWT};
+module.exports = { jwtVerifyUser, jwtSignUser };

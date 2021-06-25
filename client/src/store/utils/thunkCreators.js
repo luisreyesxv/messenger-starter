@@ -5,7 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
-  readConversation
+  readConversation,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -30,7 +30,7 @@ export const register = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/register", credentials);
     dispatch(gotUser(data));
-    socket.connect()
+    socket.connect();
     socket.emit("go-online", data.id);
   } catch (error) {
     console.error(error);
@@ -42,7 +42,7 @@ export const login = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/login", credentials);
     dispatch(gotUser(data));
-    socket.connect()
+    socket.connect();
     socket.emit("go-online", data.id);
   } catch (error) {
     console.error(error);
@@ -73,7 +73,7 @@ export const fetchConversations = () => async (dispatch) => {
 
 export const markConversationAsRead = (body) => async (dispatch) => {
   try {
-    const { data } = await axios.post("/api/messages/read",body);
+    const { data } = await axios.patch("/api/messages/read", body);
     dispatch(readConversation(data));
   } catch (error) {
     console.error(error);

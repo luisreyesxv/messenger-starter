@@ -3,6 +3,7 @@ const { User } = require("../../db/models");
 // const jwt = require("jsonwebtoken");
 const {signUserJWT} = require("../../helpers/jwtAuth")
 const { setCookie, clearCookie } = require("../../helpers/cookiesManager");
+const { jwtSignUser } = require("../../helpers/jwtAuth");
 
 router.post("/register", async (req, res, next) => {
   try {
@@ -23,7 +24,7 @@ router.post("/register", async (req, res, next) => {
 
     const user = await User.create(req.body);
 
-    const token = signUserJWT(user);
+    const token = jwtSignUser(user);
     setCookie(res, "authToken", token);
 
     res.json(user.dataValues);
@@ -56,7 +57,7 @@ router.post("/login", async (req, res, next) => {
       console.log({ error: "Wrong username and/or password" });
       res.status(401).json({ error: "Wrong username and/or password" });
     } else {
-      const token = signUserJWT(user);
+      const token = jwtSignUser(user);
 
       setCookie(res, "authToken", token);
 
