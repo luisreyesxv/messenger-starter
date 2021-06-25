@@ -66,6 +66,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("new-message", (data) => {
+    // since a user jumps into their own room when the go online, we now message them "directly" without broadcasting the message to the frontend to decipher
     socket.in(data.recipientId).emit("new-message", {
       message: data.message,
       sender: data.sender,
