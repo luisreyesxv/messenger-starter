@@ -45,13 +45,13 @@ const SenderBubble = (props) => {
         <Typography className={classes.text}>{text}</Typography>
       </Box>
       <Box>
-        {messageId === lastRead ? (
+        {messageId === lastRead && (
           <Avatar
             alt={props.otherUser.username}
             src={props.otherUser.photoUrl}
             className={classes.readAvatar}
           />
-        ) : null}
+        )}
       </Box>
     </Box>
   );
