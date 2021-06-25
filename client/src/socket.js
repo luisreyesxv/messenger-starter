@@ -21,6 +21,15 @@ socket.on("connect", () => {
   socket.on("new-message", (data) => {
     store.dispatch(setNewMessage(data.message, data.sender));
   });
+  
+
 });
+
+socket.on("connect_error", (err) =>{
+  socket.disconnect();
+  console.log(err.message)
+})
+
+
 
 export default socket;

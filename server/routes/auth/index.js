@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User } = require("../../db/models");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
+const {signUserJWT} = require("../../helpers/jwtAuth")
 const { setCookie, clearCookie } = require("../../helpers/cookiesManager");
 
 router.post("/register", async (req, res, next) => {
@@ -22,11 +23,7 @@ router.post("/register", async (req, res, next) => {
 
     const user = await User.create(req.body);
 
-    const token = jwt.sign(
-      { id: user.dataValues.id },
-      process.env.SESSION_SECRET,
-      { expiresIn: 86400 }
-    );
+    const token = signUserJWT(user);
     setCookie(res, "authToken", token);
 
     res.json(user.dataValues);
@@ -59,11 +56,7 @@ router.post("/login", async (req, res, next) => {
       console.log({ error: "Wrong username and/or password" });
       res.status(401).json({ error: "Wrong username and/or password" });
     } else {
-      const token = jwt.sign(
-        { id: user.dataValues.id },
-        process.env.SESSION_SECRET,
-        { expiresIn: 86400 }
-      );
+      const token = signUserJWT(user);
 
       setCookie(res, "authToken", token);
 
