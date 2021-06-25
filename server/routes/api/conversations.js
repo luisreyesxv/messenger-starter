@@ -73,6 +73,7 @@ router.get("/", async (req, res, next) => {
       convoJSON.latestMessageText = {
         id: convoJSON.messages[0].id,
         text: convoJSON.messages[0].text,
+        unread: convoJSON.messages[0].unread
       };
 
       // searching the database for the number of unread messages for this conversation has. The number is dependent on who is the user
