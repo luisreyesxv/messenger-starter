@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 const ChatContent = (props) => {
   const classes = useStyles();
 
-  const { conversation } = props;
+  const { conversation, typing } = props;
   const { latestMessageText, otherUser } = conversation;
 
   const previewText = () => {
@@ -56,7 +56,9 @@ const ChatContent = (props) => {
       : classes.previewText;
 
     return (
-      <Typography className={className}>{latestMessageText?.text}</Typography>
+      <Typography className={className}>
+        {typing.has(conversation.id) ? "typing . . ." : latestMessageText.text}
+      </Typography>
     );
   };
 

@@ -74,7 +74,10 @@ class Chat extends Component {
           sidebar={true}
         />
 
-        <ChatContent conversation={this.props.conversation} />
+        <ChatContent
+          conversation={this.props.conversation}
+          typing={this.props.typing}
+        />
         {this.notificationButton()}
       </Box>
     );
@@ -95,6 +98,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     activeConversation: state.activeConversation,
+    typing: state.typing,
   };
 };
 

@@ -31,17 +31,16 @@ const Input = (props) => {
   const sendTypingSignal = async () => {
     clearTimeout(stoppingTimeout);
     if (text) {
-      console.log("debounced finally hit");
       socket.emit("now-typing", {
         recipientId: props.otherUser.id,
-        id: props.otherUser.id,
+        id: props.conversationId,
       });
 
-      const newTimeout = setTimeout(
+      const newTimeout = await setTimeout(
         () =>
           socket.emit("stopped-typing", {
             recipientId: props.otherUser.id,
-            id: props.otherUser.id,
+            id: props.conversationId,
           }),
         2000
       );
@@ -49,7 +48,7 @@ const Input = (props) => {
     }
   };
 
-  const debouncedFunction = useCallback(debounce(sendTypingSignal, 1000), [
+  const debouncedFunction = useCallback(debounce(sendTypingSignal, 250), [
     text,
   ]);
 

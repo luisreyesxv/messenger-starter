@@ -22,11 +22,11 @@ socket.on("connect", () => {
   socket.on("new-message", (data) => {
     store.dispatch(setNewMessage(data.message, data.sender));
   });
-  socket.on("now-typing", (id) => {
-    store.dispatch(addTyping(id));
+  socket.on("now-typing", (data) => {
+    store.dispatch(addTyping(data));
   });
-  socket.on("stopped-typing", (id) => {
-    store.dispatch(removeTyping(id));
+  socket.on("stopped-typing", (data) => {
+    store.dispatch(removeTyping(data));
   });
 });
 
