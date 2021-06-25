@@ -80,6 +80,7 @@ export const readConversation = (id) =>{
 // REDUCER
 
 const reducer = (state = [], action) => {
+
   switch (action.type) {
     case GET_CONVERSATIONS:
       return action.conversations;
