@@ -50,7 +50,7 @@ const ChatContent = (props) => {
     const lastMessage =
       conversation?.messages[conversation.messages.length - 1];
     const isLastMessageFromUser =
-      lastMessage?.senderId == otherUser?.id && latestMessageText?.unread;
+      lastMessage?.senderId === otherUser?.id && latestMessageText?.unread;
     const className = isLastMessageFromUser
       ? classes.boldPreviewText
       : classes.previewText;

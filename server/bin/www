@@ -72,6 +72,16 @@ io.on("connection", (socket) => {
       sender: data.sender,
     });
   });
+  socket.on("now-typing", (data) => {
+    socket.in(data.recipientId).emit("now-typing", {
+      id: data.id
+  });
+})
+  socket.on("stopped-typing", (data) => {
+    socket.in(data.recipientId).emit("stopped-typing", {
+      id: data.id,
+    });
+  });
 
   socket.on("logout", (id) => {
     if (onlineUsers.has(id)) {

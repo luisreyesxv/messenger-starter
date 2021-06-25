@@ -5,6 +5,7 @@ import {
   removeOfflineUser,
   addOnlineUser,
 } from "./store/conversations";
+import { addTyping, removeTyping } from "./store/typing";
 
 const socket = io(window.location.origin);
 
@@ -21,11 +22,17 @@ socket.on("connect", () => {
   socket.on("new-message", (data) => {
     store.dispatch(setNewMessage(data.message, data.sender));
   });
+  socket.on("now-typing", (id) => {
+    store.dispatch(addTyping(id));
+  });
+  socket.on("stopped-typing", (id) => {
+    store.dispatch(removeTyping(id));
+  });
 });
 
-socket.on("connect_error",() =>{
-  socket.disconnect()
-  console.log("this is disconnecting due to error")
-})
+socket.on("connect_error", () => {
+  socket.disconnect();
+  console.log("this is disconnecting due to error");
+});
 
 export default socket;
