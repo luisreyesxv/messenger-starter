@@ -54,7 +54,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // expects {conversationId } in body
-router.post("/read", async (req, res, next) => {
+router.patch("/read", async (req, res, next) => {
   try {
     if (!req.user) {
       return res.sendStatus(401);
@@ -66,8 +66,8 @@ router.post("/read", async (req, res, next) => {
       senderId
     );
     if (Message.markAsRead(conversationId, senderId)) {
-      return res.json({ id: conversationId, lastRead: lastReadId });
-    } else return res.sendStatus(400);
+      return res.json({ id: conversationId, lastRead: lastReadId});
+    } else return res.sendStatus(500);
   } catch (error) {
     next(error);
   }

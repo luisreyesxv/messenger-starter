@@ -71,7 +71,7 @@ export const fetchConversations = () => async (dispatch) => {
 
 export const markConversationAsRead = (body) => async (dispatch) => {
   try {
-    const { data } = await axios.post("/api/messages/read",body);
+    const { data } = await axios.patch("/api/messages/read",body);
     dispatch(readConversation(data));
   } catch (error) {
     console.error(error);
