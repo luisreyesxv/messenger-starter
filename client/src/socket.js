@@ -23,4 +23,9 @@ socket.on("connect", () => {
   });
 });
 
+socket.on("connect_error",() =>{
+  socket.disconnect()
+  console.log("this is disconnecting due to error")
+})
+
 export default socket;
