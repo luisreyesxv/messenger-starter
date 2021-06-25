@@ -92,7 +92,6 @@ export const updateConversationInStore = (state, payload) => {
       const convoCopy = { ...convo };
       convoCopy.unreadCount = 0;
       convoCopy.lastRead = lastReadMessageId;
-      console.log("i'm inside here", payload)
       convoCopy.latestMessageText.unread = false
 
       return convoCopy;
