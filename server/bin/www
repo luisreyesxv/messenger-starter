@@ -62,8 +62,6 @@ io.on("connection", (socket) => {
     if (!onlineUsers.has(id)) {
       onlineUsers.add(id);
     }
-
-    console.log("this is the id", socket.id,id, onlineUsers)
     // send the user who just went online to everyone else who is already online
     socket.broadcast.emit("add-online-user", id);
   });

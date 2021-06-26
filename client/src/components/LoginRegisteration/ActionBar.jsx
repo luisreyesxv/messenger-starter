@@ -23,9 +23,9 @@ const ActionBar = (props) => {
   const history = useHistory();
 
   const message =
-    props.type === "register" ? "Need to log in?" : "Already have an account?";
-  const action = props.type === "register" ? "Login" : "Create account";
-  const linkDestination = props.type === "register" ? "/login" : "/register";
+    props.type === "/register" ? "Need to log in?" : "Already have an account?";
+  const action = props.type === "/register" ? "Login" : "Create account";
+  const linkDestination = props.type === "/register" ? "/login" : "/register";
 
   const clickHandler = () => {
     history.push(linkDestination);

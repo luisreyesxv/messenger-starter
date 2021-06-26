@@ -33,16 +33,15 @@ const QuoteSideBar = (props) => {
           item
           xs={9}
           className={classes.message}
-          direction="column"
           container
+          direction="column"
           justify="center"
           alignItems="center"
-          justify="center"
         >
           <Grid container>
             <Grid item justify="center" md={12}>
               <Icon>
-                <img src="/login-register/bubble.svg" />
+                <img alt="" src="/login-register/bubble.svg" />
               </Icon>
             </Grid>
             <Grid item justify="center" md={12}>

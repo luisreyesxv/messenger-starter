@@ -1,18 +1,24 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
-} from "@material-ui/core";
+import { Grid, Button, FormControl, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { login } from "./store/utils/thunkCreators";
+import FormHOC from "./components/LoginRegisteration/FormHOC";
+
+const useStyles = makeStyles((theme) => ({
+  mainGrid: {
+    height: "100vh",
+  },
+  mainButton: {
+    margin: "25px",
+    backgroundColor: "#3A8DFF",
+    color: "white",
+  },
+}));
 
 const Login = (props) => {
-  const history = useHistory();
+  const classes = useStyles();
   const { user, login } = props;
 
   const handleLogin = async (event) => {
@@ -28,41 +34,43 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
+    <form onSubmit={handleLogin}>
+      <Grid container xs={12}>
+        <Grid item xs={12}>
+          <FormControl margin="normal" color="primary" fullWidth>
+            <TextField
+              aria-label="username"
+              label="Username"
+              name="username"
+              type="text"
+              fullWidth
+            />
+          </FormControl>
         </Grid>
-        <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                />
-              </FormControl>
-            </Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
-              />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
-    </Grid>
+        <Grid xs={12}>
+          <FormControl margin="normal" required fullWidth>
+            <TextField
+              label="password"
+              aria-label="password"
+              type="password"
+              name="password"
+              fullWidth
+            />
+          </FormControl>
+        </Grid>
+
+        <Grid container item justify="center" xs={12}>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            className={classes.mainButton}
+          >
+            Login
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
   );
 };
 
@@ -80,4 +88,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(FormHOC(Login));
