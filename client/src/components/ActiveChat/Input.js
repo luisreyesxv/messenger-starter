@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { FormControl, FilledInput } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -48,7 +48,7 @@ const Input = (props) => {
     }
   };
 
-  const debouncedFunction = useMemo(debounce(sendTypingSignal, 250), [text]);
+  const debouncedFunction = useCallback(debounce(sendTypingSignal, 250), [text]);
 
   useEffect(() => {
     debouncedFunction();
