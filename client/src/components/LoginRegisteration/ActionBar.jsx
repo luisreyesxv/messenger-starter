@@ -61,11 +61,11 @@ const ActionBar = () => {
       <Grid item>
         <Typography color="secondary">{message}</Typography>
       </Grid>
-      <Grid item button className={classes.actionContainer}>
+      <Grid item className={classes.actionContainer}>
         <Button
           type="submit"
           size="large"
-          fullwidth
+          fullWidth
           onClick={clickHandler}
           className={classes.actionButton}
         >

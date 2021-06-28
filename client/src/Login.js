@@ -35,7 +35,7 @@ const Login = (props) => {
 
   return (
     <form onSubmit={handleLogin}>
-      <Grid container xs={12}>
+      <Grid container item xs={12}>
         <Grid item xs={12}>
           <FormControl margin="normal" color="primary" fullWidth>
             <TextField
@@ -47,7 +47,7 @@ const Login = (props) => {
             />
           </FormControl>
         </Grid>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <FormControl margin="normal" required fullWidth>
             <TextField
               label="Password"

@@ -24,12 +24,13 @@ const QuoteSideBar = () => {
     <Grid item sm={5} md={5} className={classes.root}>
       <Grid
         container
-        className={classes.pictureText}
+        item
         alignItems="center"
         justify="center"
         align="center"
       >
         <Grid
+        container
           item
           xs={9}
           className={classes.message}
@@ -39,12 +40,12 @@ const QuoteSideBar = () => {
           alignItems="center"
         >
           <Grid container>
-            <Grid item justify="center" md={12}>
+            <Grid item  md={12}>
               <Icon>
                 <img alt="" src="/login-register/bubble.svg" />
               </Icon>
             </Grid>
-            <Grid item justify="center" md={12}>
+            <Grid container item justify="center" md={12}>
               <Typography variant="h4">
                 Converse with anyone with any language
               </Typography>
