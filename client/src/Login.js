@@ -50,7 +50,7 @@ const Login = (props) => {
         <Grid xs={12}>
           <FormControl margin="normal" required fullWidth>
             <TextField
-              label="password"
+              label="Password"
               aria-label="password"
               type="password"
               name="password"

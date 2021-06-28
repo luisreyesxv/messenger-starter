@@ -13,8 +13,22 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
   const classes = useStyles();
 
-  const message =
-    props.type === "/register" ? "Create an account." : "Welcome back!";
+  let message;
+
+  // we are doing this switch case so that the values change based on pathname, but also incase we want to add another type of form or
+  // "welcome screen". default is current set with the same thing as "/register" because "/" is currently default to "/register" but that can change.
+  switch (window.location.pathname) {
+    case "/register":
+      message = "Create an account.";
+
+      break;
+    case "/login":
+      message = "Welcome Back!";
+
+      break;
+    default:
+      message = "Create an account.";
+  }
 
   return (
     <Typography className={classes.formHeader} variant="h4">

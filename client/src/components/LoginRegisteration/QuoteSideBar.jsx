@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const QuoteSideBar = (props) => {
+const QuoteSideBar = () => {
   const classes = useStyles();
 
   return (
