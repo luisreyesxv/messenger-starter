@@ -23,10 +23,6 @@ const useStyles = makeStyles(() => ({
     backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
     borderRadius: "0 10px 10px 10px",
     height: 40,
-    // display: "flex",
-    // alignItems: "center",
-    // alignContent: "space-between",
-    // // padding: 8
   },
   text: {
     fontSize: 50,
@@ -56,7 +52,6 @@ const TypingBubble = (props) => {
           {otherUser.username}
         </Typography>
         <Box className={classes.bubble}>
-            {/* <Typography className={classes.text} >⋅⋅⋅</Typography> */}
           <MoreHorizIcon  fontSize="large" color="primary" className={classes.text}/>
         </Box>
       </Box>
