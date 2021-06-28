@@ -8,7 +8,11 @@ export const addMessageToStore = (state, payload) => {
       messages: [message],
       unreadCount: currentUser ? 0 : 1,
     };
-    newConvo.latestMessageText = { id: message.id, text: message.text, unread: message.unread };
+    newConvo.latestMessageText = {
+      id: message.id,
+      text: message.text,
+      unread: message.unread,
+    };
     return [newConvo, ...state];
   }
 
@@ -17,7 +21,11 @@ export const addMessageToStore = (state, payload) => {
       const convoCopy = { ...convo };
       if (!currentUser) convoCopy.unreadCount++;
       convoCopy.messages.push(message);
-      convoCopy.latestMessageText = { id: message.id, text: message.text, unread: message.unread };
+      convoCopy.latestMessageText = {
+        id: message.id,
+        text: message.text,
+        unread: message.unread,
+      };
 
       return convoCopy;
     } else {
@@ -76,7 +84,11 @@ export const addNewConvoToStore = (state, recipientId, message) => {
       const newConvo = { ...convo };
       newConvo.id = message.conversationId;
       newConvo.messages.push(message);
-      newConvo.latestMessageText = { id: message.id, text: message.text, unread: message.unread };
+      newConvo.latestMessageText = {
+        id: message.id,
+        text: message.text,
+        unread: message.unread,
+      };
       return newConvo;
     } else {
       return convo;
@@ -92,12 +104,28 @@ export const updateConversationInStore = (state, payload) => {
       const convoCopy = { ...convo };
       convoCopy.unreadCount = 0;
       convoCopy.lastRead = lastReadMessageId;
-      console.log("i'm inside here", payload)
-      convoCopy.latestMessageText.unread = false
+      convoCopy.latestMessageText.unread = false;
 
       return convoCopy;
     } else {
       return convo;
     }
   });
+};
+
+export const addTyper = (state, data) => {
+  const newSet = new Set([...state])
+  newSet.add(data.id)
+  return newSet
+};
+
+export const removeTyper = (state, data) => {
+  if(state.has(data.id)){
+    const newSet = new Set([...state])
+    newSet.delete(data.id)
+    return newSet
+  }
+  else {
+    return state
+  }
 };
