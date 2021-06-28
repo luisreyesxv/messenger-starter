@@ -18,14 +18,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ActionBar = (props) => {
+const ActionBar = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const message =
-    props.type === "/register" ? "Need to log in?" : "Already have an account?";
-  const action = props.type === "/register" ? "Login" : "Create account";
-  const linkDestination = props.type === "/register" ? "/login" : "/register";
+  let message;
+  let action;
+  let linkDestination;
+
+  // we are doing this switch case so that the values change based on pathname, but also incase we want to add another type of form or
+  // "welcome screen". default is current set with the same thing as "/register" because "/" is currently default to "/register" but that can change.
+  switch (window.location.pathname) {
+    case "/register":
+      message = "Already have an account?";
+      action = "Login";
+      linkDestination = "/login";
+      break;
+    case "/login":
+      message = "Don't have an account?";
+      action = "Create account";
+      linkDestination = "/register";
+      break;
+    default:
+      message = "Already have an account?";
+      action = "Login";
+      linkDestination = "/login";
+  }
 
   const clickHandler = () => {
     history.push(linkDestination);
@@ -39,7 +57,6 @@ const ActionBar = (props) => {
       alignItems="center"
       spacing={0}
       className={classes.root}
-      
     >
       <Grid item>
         <Typography color="secondary">{message}</Typography>

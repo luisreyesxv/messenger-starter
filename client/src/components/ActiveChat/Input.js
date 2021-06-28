@@ -48,9 +48,7 @@ const Input = (props) => {
     }
   };
 
-  const debouncedFunction = useMemo(debounce(sendTypingSignal, 250), [
-    text,
-  ]);
+  const debouncedFunction = useMemo(debounce(sendTypingSignal, 250), [text]);
 
   useEffect(() => {
     debouncedFunction();
