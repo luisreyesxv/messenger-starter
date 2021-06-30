@@ -43,20 +43,22 @@ const useStyles = makeStyles((theme) => ({
 const ChatContent = (props) => {
   const classes = useStyles();
 
-  const { conversation } = props;
+  const { conversation, typing } = props;
   const { latestMessageText, otherUser } = conversation;
 
   const previewText = () => {
     const lastMessage =
       conversation?.messages[conversation.messages.length - 1];
     const isLastMessageFromUser =
-      lastMessage?.senderId == otherUser?.id && latestMessageText?.unread;
+      lastMessage?.senderId === otherUser?.id && latestMessageText?.unread;
     const className = isLastMessageFromUser
       ? classes.boldPreviewText
       : classes.previewText;
 
     return (
-      <Typography className={className}>{latestMessageText?.text}</Typography>
+      <Typography className={className}>
+        {typing.has(conversation.id) ? "typing . . ." : latestMessageText.text}
+      </Typography>
     );
   };
 

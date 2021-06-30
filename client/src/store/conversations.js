@@ -4,7 +4,7 @@ import {
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
   addMessageToStore,
-  updateConversationInStore
+  updateConversationInStore,
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -27,7 +27,7 @@ export const gotConversations = (conversations) => {
   };
 };
 
-export const setNewMessage = (message, sender, currentUser=null) => {
+export const setNewMessage = (message, sender, currentUser = null) => {
   return {
     type: SET_MESSAGE,
     payload: { message, currentUser: currentUser, sender: sender || null },
@@ -69,18 +69,16 @@ export const addConversation = (recipientId, newMessage) => {
   };
 };
 
-export const readConversation = (id) =>{
-  return{
+export const readConversation = (id) => {
+  return {
     type: READ_CONVERSATION,
-    id
-  }
-
-}
+    id,
+  };
+};
 
 // REDUCER
 
 const reducer = (state = [], action) => {
-
   switch (action.type) {
     case GET_CONVERSATIONS:
       return action.conversations;

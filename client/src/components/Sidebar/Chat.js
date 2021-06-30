@@ -22,7 +22,7 @@ const styles = {
     backgroundColor: "#3A8DFF",
     color: "white",
     fontWeight: "600",
-    padding: ".25rem .5rem .25rem .5rem"
+    padding: ".25rem .5rem .25rem .5rem",
   },
 };
 
@@ -31,21 +31,29 @@ class Chat extends Component {
     const { activeConversation } = this.props;
     await this.props.setActiveChat(conversation.otherUser.username);
 
-    if (!activeConversation || conversation.otherUser.username !== activeConversation) {
-      await this.props.markConversationAsRead({conversationId: conversation.id});
+    if (
+      !activeConversation ||
+      conversation.otherUser.username !== activeConversation
+    ) {
+      await this.props.markConversationAsRead({
+        conversationId: conversation.id,
+      });
     }
   };
 
   notificationButton = () => {
     const { classes } = this.props;
-    const messageNumber = this.props.conversation.unreadCount
-    const displayNumber = messageNumber < 1 ||this.conversation?.otherUser.username == this.props.activeConversation;
-    
+    const messageNumber = this.props.conversation.unreadCount;
+    const shouldDisplayNumber =
+      !messageNumber ||
+      messageNumber < 1 ||
+      this.conversation?.otherUser.username === this.props.activeConversation;
+
     return (
       <Badge
         badgeContent={messageNumber}
         max={999}
-        invisible={displayNumber}
+        invisible={shouldDisplayNumber}
         classes={{ badge: classes.unreadNumber }}
       />
     );
@@ -66,7 +74,10 @@ class Chat extends Component {
           sidebar={true}
         />
 
-        <ChatContent conversation={this.props.conversation} />
+        <ChatContent
+          conversation={this.props.conversation}
+          typing={this.props.typing}
+        />
         {this.notificationButton()}
       </Box>
     );
@@ -87,6 +98,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     activeConversation: state.activeConversation,
+    typing: state.typing,
   };
 };
 
