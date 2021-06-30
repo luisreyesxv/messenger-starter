@@ -6,6 +6,9 @@ import { postMessage } from "../../store/utils/thunkCreators";
 import debounce from "lodash.debounce";
 import socket from "../../socket";
 
+// this will store the setTimeout that will emit "stop-typing" through the sockets
+let stoppingTimeout;
+
 const styles = {
   root: {
     justifySelf: "flex-end",
@@ -19,40 +22,34 @@ const styles = {
   },
 };
 
+const sendTypingSignal = async (text, data) => {
+  clearTimeout(stoppingTimeout);
+  if (text) {
+    socket.emit("now-typing", data);
+
+    const newTimeout = await setTimeout(
+      () => socket.emit("stopped-typing", data),
+      2000
+    );
+    stoppingTimeout = newTimeout;
+  }
+};
+
 const Input = (props) => {
   const [text, setText] = useState("");
-  const [stoppingTimeout, setStoppingTimeout] = useState();
   const { classes } = props;
 
   const handleChange = (event) => {
     setText(event.target.value);
   };
 
-  const sendTypingSignal = async () => {
-    clearTimeout(stoppingTimeout);
-    if (text) {
-      socket.emit("now-typing", {
-        recipientId: props.otherUser.id,
-        id: props.conversationId,
-      });
-
-      const newTimeout = await setTimeout(
-        () =>
-          socket.emit("stopped-typing", {
-            recipientId: props.otherUser.id,
-            id: props.conversationId,
-          }),
-        2000
-      );
-      setStoppingTimeout(newTimeout);
-    }
-  };
-
   const debouncedFunction = useCallback(debounce(sendTypingSignal, 250), [text]);
 
-
   useEffect(() => {
-    debouncedFunction();
+    debouncedFunction(text, {
+      recipientId: props.otherUser.id,
+      id: props.conversationId,
+    });
 
     return debouncedFunction.cancel;
   }, [text, debouncedFunction]);
