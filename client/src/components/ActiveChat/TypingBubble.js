@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography, Avatar, SvgIcon } from "@material-ui/core";
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { Box, Typography, Avatar } from "@material-ui/core";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,7 +33,6 @@ const useStyles = makeStyles(() => ({
     alignContent: "space-between",
     letterSpacing: -0.2,
     padding: 8,
-
   },
 }));
 
@@ -52,7 +51,11 @@ const TypingBubble = (props) => {
           {otherUser.username}
         </Typography>
         <Box className={classes.bubble}>
-          <MoreHorizIcon  fontSize="large" color="primary" className={classes.text}/>
+          <MoreHorizIcon
+            fontSize="large"
+            color="primary"
+            className={classes.text}
+          />
         </Box>
       </Box>
     </Box>
