@@ -60,6 +60,8 @@ io.on("connection", (socket) => {
     socket.join(id);
     addUserOnline(id);
 
+
+
     // send the user who just went online to everyone else who is already online
     socket.broadcast.emit("add-online-user", id);
   });
