@@ -44,7 +44,7 @@ class Chat extends Component {
   notificationButton = () => {
     const { classes } = this.props;
     const messageNumber = this.props.conversation.unreadCount;
-    const displayNumber =
+    const shouldDisplayNumber =
       !messageNumber ||
       messageNumber < 1 ||
       this.conversation?.otherUser.username === this.props.activeConversation;
@@ -53,7 +53,7 @@ class Chat extends Component {
       <Badge
         badgeContent={messageNumber}
         max={999}
-        invisible={displayNumber}
+        invisible={shouldDisplayNumber}
         classes={{ badge: classes.unreadNumber }}
       />
     );

@@ -34,7 +34,6 @@ const Messages = (props) => {
         <TypingBubble
           key={"typing bubble"}
           text={"..."}
-          isTyping={typing?.has(id)}
           otherUser={otherUser}
         />
       )}

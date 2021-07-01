@@ -49,7 +49,7 @@ const SignUp = (props) => {
 
   return (
     <form onSubmit={handleRegister}>
-      <Grid container xs={12}>
+      <Grid container >
         <Grid item xs={12}>
           <FormControl margin="normal" color="primary" fullWidth>
             <TextField
@@ -61,7 +61,7 @@ const SignUp = (props) => {
             />
           </FormControl>
         </Grid>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <FormControl margin="normal" color="primary" fullWidth>
             <TextField
               label="E-mail address"
@@ -71,7 +71,7 @@ const SignUp = (props) => {
             />
           </FormControl>
         </Grid>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <FormControl
             margin="normal"
             color="primary"
@@ -90,7 +90,7 @@ const SignUp = (props) => {
             </FormHelperText>
           </FormControl>
         </Grid>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <FormControl
             margin="normal"
             color="primary"
@@ -113,7 +113,6 @@ const SignUp = (props) => {
               type="submit"
               variant="contained"
               size="large"
-              fullwidth
             >
               Create
             </Button>

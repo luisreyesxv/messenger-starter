@@ -45,6 +45,7 @@ const Input = (props) => {
 
   const debouncedFunction = useCallback(debounce(sendTypingSignal, 250), [text]);
 
+
   useEffect(() => {
     debouncedFunction(text, {
       recipientId: props.otherUser.id,

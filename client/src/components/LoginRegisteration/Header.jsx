@@ -20,11 +20,9 @@ const Header = (props) => {
   switch (window.location.pathname) {
     case "/register":
       message = "Create an account.";
-
       break;
     case "/login":
       message = "Welcome Back!";
-
       break;
     default:
       message = "Create an account.";
