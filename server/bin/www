@@ -59,6 +59,9 @@ io.on("connection", (socket) => {
     // since this is a one-to-one chat, i am setting the "room" to be the user. If we decide to do larger chatrooms, we could make it conversation Id
     socket.join(id);
     addUserOnline(id);
+
+
+
     // send the user who just went online to everyone else who is already online
     socket.broadcast.emit("add-online-user", id);
   });
