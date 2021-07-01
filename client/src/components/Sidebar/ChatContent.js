@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
     color: "#9CADC8",
     letterSpacing: -0.17,
   },
+  boldPreviewText: {
+    fontSize: 12,
+    color: "#000000",
+    letterSpacing: -0.17,
+    fontWeight: "bolder",
+  },
   notification: {
     height: 20,
     width: 20,
@@ -37,8 +43,24 @@ const useStyles = makeStyles((theme) => ({
 const ChatContent = (props) => {
   const classes = useStyles();
 
-  const { conversation } = props;
+  const { conversation, typing } = props;
   const { latestMessageText, otherUser } = conversation;
+
+  const previewText = () => {
+    const lastMessage =
+      conversation?.messages[conversation.messages.length - 1];
+    const isLastMessageFromUser =
+      lastMessage?.senderId === otherUser?.id && latestMessageText?.unread;
+    const className = isLastMessageFromUser
+      ? classes.boldPreviewText
+      : classes.previewText;
+
+    return (
+      <Typography className={className}>
+        {typing.has(conversation.id) ? "typing . . ." : latestMessageText.text}
+      </Typography>
+    );
+  };
 
   return (
     <Box className={classes.root}>
@@ -46,9 +68,7 @@ const ChatContent = (props) => {
         <Typography className={classes.username}>
           {otherUser.username}
         </Typography>
-        <Typography className={classes.previewText}>
-          {latestMessageText}
-        </Typography>
+        {previewText()}
       </Box>
     </Box>
   );

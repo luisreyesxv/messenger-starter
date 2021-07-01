@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Box } from "@material-ui/core";
+import { Box, Badge } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { withStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
+import { markConversationAsRead } from "../../store/utils/thunkCreators";
 import { connect } from "react-redux";
 
 const styles = {
@@ -17,11 +18,45 @@ const styles = {
       cursor: "grab",
     },
   },
+  unreadNumber: {
+    backgroundColor: "#3A8DFF",
+    color: "white",
+    fontWeight: "600",
+    padding: ".25rem .5rem .25rem .5rem",
+  },
 };
 
 class Chat extends Component {
   handleClick = async (conversation) => {
+    const { activeConversation } = this.props;
     await this.props.setActiveChat(conversation.otherUser.username);
+
+    if (
+      !activeConversation ||
+      conversation.otherUser.username !== activeConversation
+    ) {
+      await this.props.markConversationAsRead({
+        conversationId: conversation.id,
+      });
+    }
+  };
+
+  notificationButton = () => {
+    const { classes } = this.props;
+    const messageNumber = this.props.conversation.unreadCount;
+    const shouldDisplayNumber =
+      !messageNumber ||
+      messageNumber < 1 ||
+      this.conversation?.otherUser.username === this.props.activeConversation;
+
+    return (
+      <Badge
+        badgeContent={messageNumber}
+        max={999}
+        invisible={shouldDisplayNumber}
+        classes={{ badge: classes.unreadNumber }}
+      />
+    );
   };
 
   render() {
@@ -38,7 +73,12 @@ class Chat extends Component {
           online={otherUser.online}
           sidebar={true}
         />
-        <ChatContent conversation={this.props.conversation} />
+
+        <ChatContent
+          conversation={this.props.conversation}
+          typing={this.props.typing}
+        />
+        {this.notificationButton()}
       </Box>
     );
   }
@@ -49,7 +89,20 @@ const mapDispatchToProps = (dispatch) => {
     setActiveChat: (id) => {
       dispatch(setActiveChat(id));
     },
+    markConversationAsRead: (id) => {
+      dispatch(markConversationAsRead(id));
+    },
   };
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(Chat));
+const mapStateToProps = (state) => {
+  return {
+    activeConversation: state.activeConversation,
+    typing: state.typing,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Chat));

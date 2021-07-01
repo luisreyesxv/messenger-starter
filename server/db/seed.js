@@ -26,6 +26,7 @@ async function seed() {
   const santaigoConvo = await Conversation.create({
     user1Id: thomas.id,
     user2Id: santiago.id,
+    
   });
 
   await Message.create({
